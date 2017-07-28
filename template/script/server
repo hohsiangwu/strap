@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+appdir=$(cd $(dirname "$0")/.. && pwd)
+[ -f /etc/inside-container  ] || exec "$appdir/script/app-env" $0 $@
+
+exec gunicorn -b :{{ port }} {{ app_name }}:app
